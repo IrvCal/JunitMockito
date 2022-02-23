@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 public class Cuenta {
     private String persona;
     private BigDecimal saldo;//Es mas preciso
-
     //Para hacer este equals primero se hizo el test para entender el comportamiento que debiera arrojar
     @Override
     public boolean equals(Object obj){
@@ -23,6 +22,19 @@ public class Cuenta {
         Cuenta c = (Cuenta) obj;
         Predicate<Cuenta> equals = cuenta -> (this.persona != null && this.saldo != null) && (this.persona.equals(cuenta.persona) && this.saldo.equals(cuenta.getSaldo()));
         return equals.test(c);
+    }
+
+    /**
+     * Metodos de logica de negocio
+     * Debieran ir en Service
+     */
+    public void debito(BigDecimal monto){
+        this.saldo=//se tiene que igualar porque el .substract() devuelve una nueva instancia de un BigDecimal y el valor original permanece intacto
+        this.saldo.subtract(monto);
+    }
+    public void credito(BigDecimal monto){
+        this.saldo=//se tiene que igualar porque el .substract() devuelve una nueva instancia de un BigDecimal y el valor original permanece intacto
+                this.saldo.add(monto);
     }
 
 }

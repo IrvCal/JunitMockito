@@ -51,6 +51,22 @@ class CuentaTest {
 //        assertNotEquals(cuenta2,cuenta);
 //        Pero que pasaria si se quiere tomar que estos son el mismo, por ejemplo en una lista de productos
         assertEquals(cuenta2,cuenta);//se tiene que sobreescribir el metodo Equals de la clase Cuenta
+    }
 
+    @Test
+    void testDebitoCuenta() {
+        Cuenta cuenta = Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
+        cuenta.debito(new BigDecimal(100));
+        assertNotNull(cuenta.getSaldo());
+        assertEquals(900,cuenta.getSaldo().intValue());
+        assertEquals("900.12354",cuenta.getSaldo().toPlainString());
+    }
+    @Test
+    void testCreditoCuenta() {
+        Cuenta cuenta = Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
+        cuenta.credito(new BigDecimal(100));
+        assertNotNull(cuenta.getSaldo());
+        assertEquals(1100,cuenta.getSaldo().intValue());
+        assertEquals("1100.12354",cuenta.getSaldo().toPlainString());
     }
 }
