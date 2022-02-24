@@ -1,10 +1,9 @@
 package e1.domain;
 
 import e1.exceptions.DineroInsuficienteException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,14 +11,35 @@ import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CuentaTest {
 
     Cuenta cuenta;
 
+    /**
+     * Tienen que ser static de lo contrario va a ingnorar todos los test
+     */
+    @AfterAll
+    static void despues(){
+        System.out.println("Trmino TODO el test");
+    }
+    @BeforeAll
+    static void antesDeTodos(){
+        System.out.println("Iniciando tests");
+    }
+
+    /**
+     * Este ya no es STATIC
+     */
+    @AfterEach
+     void despsCada(){
+        System.out.println("Termino este test");
+    }
+
     @BeforeEach
     void dataInit(){
         cuenta=
-        Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
+                Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
     }
 
     /**
@@ -195,7 +215,6 @@ class CuentaTest {
                 () -> assertEquals("Banamex el banco fuerte de mexico",cuenta1.getBanco().getNombre(),()-> "El nombre correcto del banco es otro"),//ERROR
                 () -> assertTrue(banco.getCuentas().stream().anyMatch(cuenta -> cuenta.getPersona().equals("Irving")))
         );
-
-
     }
+
 }
