@@ -1,8 +1,6 @@
 package e1.domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
 
 public class E4ClasesAnidadas {
@@ -49,8 +47,10 @@ public class E4ClasesAnidadas {
 
         @Test
         @DisabledOnOs(OS.WINDOWS)
-        void noMac() {
-            System.out.println("No acepta windows");
+        void noMac(TestInfo info, TestReporter reporter) {
+            System.out.println("Ejecutando el test: "+ info);
+            System.out.println("Tiene los tags: "+ info.getTestMethod().orElse(null).getName());
+            ;System.out.println("No acepta windows");
         }
 
         @Test

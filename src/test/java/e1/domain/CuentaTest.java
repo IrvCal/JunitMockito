@@ -14,8 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CuentaTest {
 
-    Cuenta cuenta;
-
+    private Cuenta cuenta;
     /**
      * Tienen que ser static de lo contrario va a ingnorar todos los test
      */
@@ -38,8 +37,7 @@ class CuentaTest {
 
     @BeforeEach
     void dataInit(){
-        cuenta=
-                Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
+        cuenta= Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
     }
 
     /**
