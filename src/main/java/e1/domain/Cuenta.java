@@ -1,5 +1,6 @@
-package e1.dominio;
+package e1.domain;
 
+import e1.exceptions.DineroInsuficienteException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ import java.util.function.Predicate;
 public class Cuenta {
     private String persona;
     private BigDecimal saldo;//Es mas preciso
+    private Banco banco;
     //Para hacer este equals primero se hizo el test para entender el comportamiento que debiera arrojar
     @Override
     public boolean equals(Object obj){
@@ -28,11 +30,14 @@ public class Cuenta {
      * Metodos de logica de negocio
      * Debieran ir en Service
      */
-    public void debito(BigDecimal monto){
-        this.saldo=//se tiene que igualar porque el .substract() devuelve una nueva instancia de un BigDecimal y el valor original permanece intacto
+    public void gasto(BigDecimal monto){
+        BigDecimal nuevoSaldo=//se tiene que igualar porque el .substract() devuelve una nueva instancia de un BigDecimal y el valor original permanece intacto
         this.saldo.subtract(monto);
+        if(nuevoSaldo.compareTo(BigDecimal.ZERO)<0)
+            throw new DineroInsuficienteException("Dinero insuficiente");
+        this.saldo= nuevoSaldo;
     }
-    public void credito(BigDecimal monto){
+    public void abono(BigDecimal monto){
         this.saldo=//se tiene que igualar porque el .substract() devuelve una nueva instancia de un BigDecimal y el valor original permanece intacto
                 this.saldo.add(monto);
     }
