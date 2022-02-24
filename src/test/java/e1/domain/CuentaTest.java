@@ -1,6 +1,7 @@
 package e1.domain;
 
 import e1.exceptions.DineroInsuficienteException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,11 +9,18 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CuentaTest {
+
+    Cuenta cuenta;
+
+    @BeforeEach
+    void dataInit(){
+        cuenta=
+        Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
+    }
 
     /**
      * Test para probar si el nombre se esta seteando correctamente
@@ -63,7 +71,6 @@ class CuentaTest {
 
     @Test
     void testDebitoCuenta() {
-        Cuenta cuenta = Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
         cuenta.gasto(new BigDecimal(100));
         assertNotNull(cuenta.getSaldo());
         assertEquals(900,cuenta.getSaldo().intValue());
@@ -71,7 +78,6 @@ class CuentaTest {
     }
     @Test
     void testCreditoCuenta() {
-        Cuenta cuenta = Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
         cuenta.abono(new BigDecimal(100));
         assertNotNull(cuenta.getSaldo());
         assertEquals(1100,cuenta.getSaldo().intValue());
@@ -79,7 +85,6 @@ class CuentaTest {
     }
     @Test
     void dineroInsuficienteExceptionTest(){
-        Cuenta cuenta = Cuenta.builder().persona("Irving").saldo(new BigDecimal("1000.12354")).build();
 //        se utiliza para checar precisamente el manejo de excepciones
         Exception exception = //se cacha el obj que devuelve el assertThrows para despues mirar si el msj de error es el deseado
         assertThrows(DineroInsuficienteException.class,() -> {
